@@ -1,0 +1,7 @@
+Basic React Project Setup
+
+Let's start by setting up a simple React application with a create-react-app.
+  
+   npx create-react-app react-http-example
+   cd react-http-example
+   npm start

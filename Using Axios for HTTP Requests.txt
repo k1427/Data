@@ -1,0 +1,54 @@
+Using Axios for HTTP Requests
+
+  Step 1: Install Axios To use Axios in a React project, first, install the package.
+  npm install axios
+
+
+
+3. Basic HTTP GET Request Using Axios
+
+
+// src/App.js
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+
+function App() {
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    axios.get("https://jsonplaceholder.typicode.com/posts")
+      .then(response => {
+        setData(response.data);
+        setLoading(false);
+      })
+      .catch(error => {
+        setError("Error fetching data");
+        setLoading(false);
+      });
+  }, []);
+
+  if (loading) return <h1>Loading...</h1>;
+  if (error) return <h1>{error}</h1>;
+
+  return (
+    <div>
+      <h1>Posts</h1>
+      <ul>
+        {data.slice(0, 5).map(post => (
+          <li key={post.id}>{post.title}</li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+export default App;
+
+
+In this example:
+
+We use Axios to make a GET request.
+Data is fetched inside the useEffect hook to ensure it happens when the component is mounted.
+The state loading, data, and error are used to handle different UI states.

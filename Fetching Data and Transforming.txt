@@ -1,0 +1,45 @@
+Fetching Data and Transforming
+
+
+You might often need to transform or filter the data after fetching it from an API. Here's an example of fetching user data and transforming it to show only user names in uppercase.
+
+
+
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+
+function App() {
+  const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    axios.get("https://jsonplaceholder.typicode.com/users")
+      .then(response => {
+        const transformedData = response.data.map(user => ({
+          id: user.id,
+          name: user.name.toUpperCase()
+        }));
+        setUsers(transformedData);
+        setLoading(false);
+      })
+      .catch(error => {
+        console.log("Error fetching data", error);
+        setLoading(false);
+      });
+  }, []);
+
+  if (loading) return <h1>Loading...</h1>;
+
+  return (
+    <div>
+      <h1>Transformed User Data</h1>
+      <ul>
+        {users.map(user => (
+          <li key={user.id}>{user.name}</li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+export default App;
